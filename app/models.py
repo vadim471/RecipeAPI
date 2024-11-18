@@ -38,7 +38,7 @@ class Ingredient(Base):
     recipe = relationship("Recipe", secondary = recipe_ingredients, back_populates = "ingredient")
 
 class Link(Base):
-    __tablename__ = "link"
+    __tablename__ = "link_new"
     id = Column(Integer, ForeignKey("recipe.id"), primary_key = True)
     photo = Column(String)
 

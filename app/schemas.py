@@ -31,7 +31,7 @@ class RecipeSchema(RecipeBase):
     id: int
     ingredient: List[IngredientBase] = []
     category: List[CategoryBase] = []
-    link: Optional[LinkBase] = None
+    link: List[LinkBase] = None
 
     class Config:
         from_attributes = True

@@ -1,9 +1,9 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session
 from app.database import SessionLocal
 from app.crud import get_recipes, get_recipes_by_category, get_recipes_by_ingredients
 from app.schemas import RecipeSchema
-from typing import List
+from typing import List, Optional
 
 router = APIRouter()
 
@@ -20,11 +20,11 @@ def list_recipes(exclude: List[str] = None, db: Session = Depends(get_db)):
     return recipes
 
 @router.get("/recipes/category", response_model = List[RecipeSchema])
-def recipes_by_category(category: str, exclude: List[str] = None, db: Session = Depends(get_db)):
+def recipes_by_category(category: str, exclude: Optional[List[str]] = Query(None), db: Session = Depends(get_db)):
     recipes = get_recipes_by_category(db, category, exclude)
     return recipes
 
 @router.get("/recipes/ingredients", response_model = List[RecipeSchema])
-def recipes_by_ingeridents(ingredients: List[str], exclude: List[str] = None, db: Session = Depends(get_db)):
+def recipes_by_ingeridents(ingredients: List[str] = Query(str), exclude: Optional[List[str]] = Query(None), db: Session = Depends(get_db)):
     recipes = get_recipes_by_ingredients(db, ingredients, exclude)
     return recipes
